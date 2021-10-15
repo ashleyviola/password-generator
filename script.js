@@ -1,33 +1,48 @@
 // Assignment code here
 
 // Variable Values 
-character = ["!", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "\:", "\;", " < ", "=", " > ", " ? ", "@", "[", "\\", "]", " ^ ", "_", "`", "{", "|", "}", "~"];
-// Number Values 
+special = ["!'#$%&()*+-./;:<>=?@[]{}~^"]
 number = [1,2,3,4,5,6,7,8,9,0]
-// Letter Values 
-//Lowercase 
-alphaLower = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
-alphaUpper = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+alphaLower = ["abcdefghijklmnopqrstuvwxyz"];
+alphaUpper = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+
+// Variables for all options 
+let allOption = special + number + alphaLower + alphaUpper
+let option1 = special + number + alphaLower
+let option2 = special + number + alphaUpper
+let option3 = special + alphaLower + alphaUpper
+let option4 = number + alphaLower + alphaUpper
+let option5 = special + number
+let option6 
+
 
 // Start Function to generate password
 let generatePassword = function(){
   //ask user how long they'd like their password
   let enter = window.prompt("How many characters would you like your password? Choose between 8 and 128.");
-    
+
   //begin validation of statement
+    // if no response is added request for them to try again
     if (enter === "" || enter === null){
       window.alert("You need to provide a valid answer. Please try again.");
       return generatePassword();
     }
+
+    // if number between 8 & 128 is submitted validate other pw inclusions
     if (enter >= 8 && enter <= 128){
       let confirmNumber = window.confirm ("Will this contain numbers?");
       let confirmCharacter = window.confirm ("Will this contain special characters?");
       let confirmAlphaLower= window.confirm ("Will this contain lowercase letters?");
       let confirmAlphaUpper = window.confirm ("Will this contain uppercase letters");
-    } else {
+    } 
+
+    // if number outside of range is submitted request for them to try again 
+    else {
       window.alert("You need to provide a number between 8 and 128. Please try again.");
       return generatePassword();
-    }
+    };
+
+    
  };
 
 
