@@ -1,71 +1,85 @@
-// Assignment code here
 
 // Variable Values 
+pwOptions = [];
+passwordLength = 8;
 special = ["!","'","#","$","%","&","(",")","*","+","-",".","/",";",":","<",">","=","?","@","[","]","{","}","~","^"]
 number = [1,2,3,4,5,6,7,8,9,0]
 alphaLower = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 alphaUpper = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 
-pwOptions = [];
 
-// Start Function to generate password
-let generatePassword = function(){
-
-  
- }
-
-let getPrompt = function(){
-
-  //reset character choices each time 
-
-  pwOptions = [];
-  //ask user how long they'd like their password 
-  let passwordLength = parseInt(window.prompt("How many characters would you like your password? Choose between 8 and 128."))
- 
-    // if no response is added request for them to try again
-
-    if (passwordLength === "" || passwordLength === null){
-      window.alert("You need to provide a valid answer. Please try again.");
-      return getPrompt();
-    }
-    
-    // if number between 8 & 128 is submitted validate other pw inclusion
-    if (passwordLength >= 8 && passwordLength <= 128){
-      if (window.confirm("Would you like special characters in your password?")){
-        pwOptions = pwOptions.concat(special);
-      }
-      if (window.confirm("Would you like special numbers in your password?")){
-        pwOptions = pwOptions.concat(number);
-      }
-      if (window.confirm("Would you like special lowercase letters in your password?")){
-        pwOptions = pwOptions.concat(alphaLower);
-      }
-      if (window.confirm("Would you like special uppercase letters in your password?")){
-        pwOptions = pwOptions.concat(alphaUpper);
-      }
-      return true;
-    } 
-      // if number outside of range is submitted request for them to try again 
-      else {
-        window.alert("You need to provide a number between 8 and 128. Please try again.");
-        return generatePassword();
-    };
-}
-
-
-
-  
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
-// Write password to the #password input
+// Add event listener to generate button
+generateBtn.addEventListener("click", writePassword);
+
+// Write Password Function
 function writePassword() {
+
+  // run initial prompt messages 
+  let optionsSelected = getPrompt();
+
+  // if initial prompts are correctly completed a password will be generated 
+  if (optionsSelected){
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
+  }
 }
+// Generate Password Function
+let generatePassword = function(){
 
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+  let password = "";
+
+  for(var i = 0; i < passwordLength; i++){
+    var randomLetter = Math.floor(Math.random() * pwOptions.length)
+    password = password + pwOptions[randomLetter];
+  }
+  return password;
+ }
+
+ // User Character Selection Function 
+let getPrompt = function(){
+
+  //reset character choices each time 
+  pwOptions = [];
+
+  //ask user how long they'd like their password 
+  let passwordLength = parseInt(window.prompt("How many characters would you like your password? Choose between 8 and 128."))
+  
+    // if no response is added request for them to try again
+    if (passwordLength == "" || isNaN(passwordLength) || passwordLength < 8 || passwordLength > 128){
+      window.alert("You need to provide a valid answer. Please try again.");
+      getPrompt();
+    }
+    // variables for selections
+    var hasSpecial = window.confirm("Would you like special characters in your password?");
+    var hasNumber = window.confirm("Would you like numbers in your password?");
+    var hasLower = window.confirm("Would you like lowercase letters in your password?");
+    var hasUpper = window.confirm("Would you like uppercase letters in your password?");
+
+      // validate selections 
+      if (!hasSpecial && !hasNumber && !hasLower && !hasUpper){
+      window.alert("You must choose at least 1 character type. Please Try again.");
+      getPrompt();
+      }
+      if (hasSpecial){
+        pwOptions = pwOptions.concat(special);
+      }
+      if (hasNumber){
+        pwOptions = pwOptions.concat(number);
+      }
+      if (hasLower){
+        pwOptions = pwOptions.concat(alphaLower);
+      }
+      if (hasUpper){
+        pwOptions = pwOptions.concat(alphaUpper);
+      }
+      return true;
+    } 
+
+
+
+  
