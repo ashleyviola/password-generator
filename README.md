@@ -17,7 +17,7 @@ Website has been designed to create a secure password with the following validat
 - script.js
 
 ## Initial Site Load 
-![Password Generator Preview](assets/application-preview)
+![Password Generator Preview](assets/application-preview.png)
 
 ## Instructions 
 1. Fork and clone repository
